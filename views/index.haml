@@ -1,0 +1,30 @@
+!!!
+%html
+  %head
+    %meta{ charset: "utf-8" }/
+    %title #{@title}
+    %link{ href: "/css/bootstrap.min.css", rel: "stylesheet" }/
+    :css
+      body {
+      padding-top: 60px;
+      }
+
+  %body
+    .container
+      .navbar.navbar-fixed-top
+        .navbar-inner
+          .container
+            %h1
+              %a.brand{ href: '/' } いつ作るの？今でしょ。β版
+      %p <br>私たちにやる気と情熱を与えてくれる「今でしょ」画像を生成します。
+      %p <br>先生に言って欲しいセリフを入力してください。
+      %p
+        %form{ action: "/doitnow", method: "get" }
+          %input{ type: "texfield", name: "url", size: 100 }
+          %input{ type: "submit", value: "今でしょ！" }
+      %p <br>※日本語を入力すると華麗に文字化けします。先生には英語で話してもらいましょう。（いつか直します）
+      %p 先生ご本人様へ。<br>いつも勇気をありがとう御座います。<br>肖像権等いろいろあると思いますので、停止願いのご連絡を頂いた際には即消します。
+      <hr>
+      %footer
+        &copy; 2013 OMEGA(@equal_001)
+
