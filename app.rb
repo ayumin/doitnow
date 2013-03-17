@@ -1,7 +1,7 @@
 # coding: utf-8
 
-require 'sinatra/reloader'
-  if development?
+configure :development do
+  require 'sinatra/reloader'
 end
 
 
