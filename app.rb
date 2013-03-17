@@ -33,7 +33,6 @@ get '/doitnow' do
   # binding.pry
 
   @title = 'Do it now!'
-  haml :doitnow
 
   w = 420
   h = 360
