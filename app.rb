@@ -2,25 +2,11 @@
 require 'sinatra'
 require 'haml'
 require 'cairo'
-require 'pango'
 require 'tempfile'
 
 configure :development do
   require 'pry'
   require 'sinatra/reloader'
-end
-
-configure do
-  set :font_families, Pango::CairoFontMap.default.families.collect {|family|
-    name = family.name
-    name.force_encoding("UTF-8") if name.respond_to?(:force_encoding)
-    name
-  }
-  set :default_font, lambda {
-    font_families.find do |name|
-      ["Osaka", "MS PGothic", "VL PGothic", "Monospace"].include? name
-    end or font_families.find {|n| n =~ /gothic/i }
-  }
 end
 
 get '/' do
@@ -49,16 +35,9 @@ get '/doitnow' do
   context.paint
   #Put a string
   context.set_source_rgb(25, 255, 255)
-  layout = context.create_pango_layout
-  layout.text = params[:url]
-  layout.font_description = begin
-                              font_description = Pango::FontDescription.new
-                              font_description.family = get_font_name
-                              font_description.size = 25 * Pango::SCALE
-                              font_description
-                            end
+  context.font_size = 25
   context.move_to(10, 50)
-  context.show_pango_layout(layout)
+  context.show_text(params[:url])
 
   #Drawing background-color(Black)
   tmpfile = Tempfile.new(["hayashi", ".png"])
@@ -82,9 +61,5 @@ helpers do
     else
       url
     end
-  end
-
-  def get_font_name
-    params[:font].to_s.empty? ? settings.default_font : params[:font]
   end
 end

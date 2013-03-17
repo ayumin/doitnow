@@ -11,14 +11,9 @@ GEM
     backports (3.1.1)
     coderay (1.0.9)
     eventmachine (1.0.3)
-    glib2 (1.2.2)
-      pkg-config
     haml (4.0.0)
       tilt
     method_source (0.8.1)
-    pango (1.2.2)
-      cairo (>= 1.10.0)
-      glib2 (>= 1.2.2)
     pkg-config (1.1.4)
     pry (0.9.12)
       coderay (~> 1.0.5)
@@ -49,7 +44,6 @@ PLATFORMS
 DEPENDENCIES
   cairo!
   haml
-  pango
   pry
   sinatra
   sinatra-contrib

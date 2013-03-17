@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'sinatra'
 gem 'haml'
 gem 'cairo', git: "git://github.com/udzura/rcairo.git"
-gem 'pango'
+# gem 'pango'
 
 group :development do
   gem 'pry'
