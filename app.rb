@@ -3,6 +3,7 @@ require 'sinatra'
 require 'haml'
 require 'cairo'
 require 'pango'
+require 'tempfile'
 
 configure :development do
   require 'pry'
@@ -61,10 +62,13 @@ get '/doitnow' do
   context.show_pango_layout(layout)
 
   #Drawing background-color(Black)
-  surface.write_to_png('views/paint.png')
-  #Sent to doitnow.haml
+  tmpfile = Tempfile.new(["hayashi", ".png"])
+  surface.write_to_png(tmpfile.path)
+  tmpfile.open # reopen
+
+  #Render png binary content
   content_type :png
-  send_file "views/paint.png"
+  tmpfile.read
 end
 
 
