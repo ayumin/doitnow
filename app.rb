@@ -1,4 +1,7 @@
 # coding: utf-8
+require 'sinatra'
+require 'haml'
+require 'cairo'
 
 configure :development do
   require 'sinatra/reloader'
