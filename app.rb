@@ -15,6 +15,11 @@ configure do
     name.force_encoding("UTF-8") if name.respond_to?(:force_encoding)
     name
   }
+  set :default_font, lambda {
+    font_families.find do |name|
+      ["Osaka", "MS PGothic", "VL PGothic", "Monospace"].include? name
+    end or font_families.find {|n| n =~ /gothic/i }
+  }
 end
 
 get '/' do
@@ -48,7 +53,7 @@ get '/doitnow' do
   layout.text = params[:url]
   layout.font_description = begin
                               font_description = Pango::FontDescription.new
-                              font_description.family = "MS PGothic" #settings.font_families.first
+                              font_description.family = get_font_name
                               font_description.size = 25 * Pango::SCALE
                               font_description
                             end
@@ -76,4 +81,7 @@ helpers do
     end
   end
 
+  def get_font_name
+    params[:font].to_s.empty? ? settings.default_font : params[:font]
+  end
 end
