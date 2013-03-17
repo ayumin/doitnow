@@ -2,11 +2,20 @@
 require 'sinatra'
 require 'haml'
 require 'cairo'
+require 'pango'
 
 configure :development do
+  require 'pry'
   require 'sinatra/reloader'
 end
 
+configure do
+  set :font_families, Pango::CairoFontMap.default.families.collect {|family|
+    name = family.name
+    name.force_encoding("UTF-8") if name.respond_to?(:force_encoding)
+    name
+  }
+end
 
 get '/' do
   @title = 'Do it now!'
@@ -15,6 +24,8 @@ end
 
 
 get '/doitnow' do
+  # binding.pry
+
   @title = 'Do it now!'
   haml :doitnow
 
@@ -33,15 +44,23 @@ get '/doitnow' do
   context.paint
   #Put a string
   context.set_source_rgb(25, 255, 255)
-  context.font_size = 25
+  layout = context.create_pango_layout
+  layout.text = params[:url]
+  layout.font_description = begin
+                              font_description = Pango::FontDescription.new
+                              font_description.family = "MS PGothic" #settings.font_families.first
+                              font_description.size = 25 * Pango::SCALE
+                              font_description
+                            end
   context.move_to(10, 50)
-  context.show_text(params[:url])
+  context.show_pango_layout(layout)
+
   #Drawing background-color(Black)
   surface.write_to_png('views/paint.png')
-  #Sent to doitnow.haml 
+  #Sent to doitnow.haml
   content_type :png
   send_file "views/paint.png"
-  end
+end
 
 
 helpers do
