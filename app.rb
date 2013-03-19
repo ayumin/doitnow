@@ -32,7 +32,7 @@ get '/doitnow' do
   context.set_source_rgb(25, 255, 255)
   context.font_size = 25
   context.move_to(10, 50)
-  context.show_text(params[:string])
+  context.show_text(params[:url])
   #Drawing background-color(Black)
   surface.write_to_png('views/paint.png')
   #Sent to doitnow.haml 
@@ -42,15 +42,15 @@ get '/doitnow' do
 
 
 helpers do
-  def add_schema(string)
-    if string !~ /^https?/
-      if string =~ /\/\//
-        "http:#{string}"
+  def add_schema(url)
+    if url !~ /^https?/
+      if url =~ /\/\//
+        "http:#{url}"
       else
-        "http://#{string}"
+        "http://#{url}"
       end
     else
-      string
+      url
     end
   end
 
