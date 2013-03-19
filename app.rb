@@ -1,8 +1,9 @@
-# coding: utf-8
+# encoding: utf-8
 
 require 'sinatra/reloader'
   if development?
 end
+
 
 
 get '/' do
@@ -16,23 +17,25 @@ get '/doitnow' do
   haml :doitnow
 
   w = 420
-  h = 360
+  h = 400
+
 
   surface = Cairo::ImageSurface.new(w, h)
   context = Cairo::Context.new(surface)
 
   context.set_source_rgb(0, 0, 0)
-  context.rectangle(0, 0, w, h)
+  context.rectangle(0, 200, w, h)
   context.fill
   #Put a Mr.hayashi's face
   surface2 = Cairo::ImageSurface.from_png('views/0.png')
+  context.select_font_face("meiryob.ttc")
   context.set_source(surface2, 0, 0)
   context.paint
   #Put a string
   context.set_source_rgb(25, 255, 255)
   context.font_size = 25
-  context.move_to(10, 50)
-  context.show_text(params[:url])
+  context.move_to(20, 380)
+  context.show_text('「'+params[:url]+'」')
   #Drawing background-color(Black)
   surface.write_to_png('views/paint.png')
   #Sent to doitnow.haml 
