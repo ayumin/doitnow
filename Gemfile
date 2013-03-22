@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
-# gem "rails", ">= 3.0.0"
+gem 'thin'
 gem 'sinatra'
 gem 'haml'
 gem 'cairo', git: "git://github.com/udzura/rcairo.git"
-# gem 'pango'
 
 group :development do
   gem 'pry'
